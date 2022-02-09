@@ -1,0 +1,224 @@
+import java.util.ArrayList;
+
+public class Sort 
+{
+	
+	//bubble sort
+	// swap method helper = private
+	
+	private void swap(Object array[], int a, int b)
+	{
+		Object temp = array[a];
+		array[a] = array[b];
+		array[b] = temp;
+	}
+	
+	public void bubbleSort(Object array[])
+	{
+		
+		System.out.println("Bubble Sort:");
+		System.out.print("Original Array: \t\t"); printArray(array);
+		for(int i = 0; i < array.length; i++)
+		{
+			for(int j = 0 ; j < array.length-1; j++)
+			{
+				Comparable c =  (Comparable)array[j];
+				Comparable c1 = (Comparable)array[j+1];
+				if(c.compareTo(c1) > 0)//swap
+				{
+					swap(array, j, j+1); 
+					System.out.print("Swapped " + array[i] + " and " + array[j+1] + "\t\t"); 
+					printArray(array); 
+				}
+				
+			}
+		}
+	}
+
+	
+	public void printArray(Object array[])
+	{
+		String s = "[ ";
+		
+		for(int i = 0; i < array.length; i++)
+		{
+			if(i == array.length - 1)
+			{
+				s += array[i] + "]";
+			}
+			else
+			{
+				s += array[i] + ", ";
+			}
+		}
+	
+		System.out.println(s);
+	}
+	
+	
+	//insertion sort
+	public void insertionSort(Object array[])
+	{
+		System.out.println("Insertion Sort:");
+		System.out.print("Original Array: \t\t"); printArray(array);
+		
+		for(int i = 0; i < array.length; i++)
+		{
+			Comparable toInsert = (Comparable)array[i];
+			
+			//find spot to insert then insert the value using a swap
+			for(int j = 0; j < array.length; j++)
+			{
+				Comparable itemToCompare = (Comparable)array[j];
+				if(toInsert.compareTo(itemToCompare) < 0)
+			    {
+					swap(array, i, j);
+					System.out.print("Swapped " + array[i ]+ " and " + array[j] + "\t\t"); 
+					printArray(array); 
+				}
+				
+			}
+		}
+		
+	}
+	
+
+	
+	//Insertion sort with arrayList
+	public void insertionSort(ArrayList<Comparable> list)
+	{
+		for(int i = 0; i < list.size(); i++)
+		{
+			Comparable toInsert = list.get(i);
+			for(int j = 0; j < list.size(); j++)
+			{
+				
+				Comparable c = list.get(j);
+				
+				
+				
+				if(toInsert.compareTo(c) < 0 )
+				{
+					this.insertHelper(list, toInsert, i, j);
+					System.out.println("Inserting: " + toInsert + "\n  "+ list );	
+					System.out.println();
+					int start = j;
+					while(start > 0)
+					{
+						Comparable before = list.get(start - 1);
+						Comparable current = list.get(start);
+						if(before.compareTo(current) > 0)
+						{
+							i = start - 1;
+							break;
+						}
+						start--;
+					}
+			
+					break;
+				}
+				
+				
+			}
+		}
+	}
+	
+	
+	
+	
+	private void insertHelper(ArrayList<Comparable> list, 
+			Comparable toInsert, int previousIndex, int  currentIndex)
+	{
+		   list.add(currentIndex, toInsert);
+		   if(previousIndex < currentIndex)
+		   {
+			   list.remove(toInsert);
+		   }
+		   else
+		   {
+			   list.remove(list.lastIndexOf(toInsert));
+		   }
+	}
+	
+	
+
+	
+	//selection sort
+	public void selectionSort(Object array[])
+	{
+		System.out.println("Selection Sort:");
+		System.out.print("Original Array: \t\t"); printArray(array);
+		for(int i = array.length - 1; i >=0 ; i--)
+		{
+			Comparable currentLargest = (Comparable)array[i];
+			int currentElementIndex = 0;
+			
+			//Look for the largest object and
+			//exclude the previous largest element
+			for(int j = 0; j < i+1 ; j++)
+			{
+					Comparable currentElement = (Comparable)array[j];
+					
+					 if(currentElement.compareTo(currentLargest) >= 0)
+					{
+						currentLargest = currentElement;
+						currentElementIndex = j;
+					}
+						
+			}
+			
+			System.out.print("Swapped " 
+					+ array[currentElementIndex] + " and " + array[i] + "\t\t");
+			swap(array, currentElementIndex, i); 
+			printArray(array);
+
+		}
+	}
+	
+	
+	
+	/** merge - helper method for mergeSort */
+    private static void merge(int[] arr, int[] tmp, int leftStart, int leftEnd,
+    		           int rightStart, int rightEnd)
+    {
+        int i = leftStart;    // index into left subarray
+        int j = rightStart;   // index into right subarray
+        int k = leftStart;    // index into tmp
+        
+        while (i <= leftEnd && j <= rightEnd)
+            if (arr[i] < arr[j])
+                tmp[k++] = arr[i++];
+            else
+                tmp[k++] = arr[j++];
+        
+        while (i <= leftEnd)
+            tmp[k++] = arr[i++];
+        
+        while (j <= rightEnd)
+            tmp[k++] = arr[j++];
+        
+        for (i = leftStart; i <= rightEnd; i++)
+            arr[i] = tmp[i];
+    }
+    
+    /** mSort - recursive method for mergeSort */
+    private static void mSort(int[] arr, int[] tmp, int start, int end)
+    {
+        if (start >= end)
+            return;
+        int middle = (start + end)/2;
+        mSort(arr, tmp, start, middle);
+        mSort(arr, tmp, middle + 1, end);
+        merge(arr, tmp, start, middle, middle + 1, end);
+    }
+    
+    /** mergeSort */
+    public static void mergeSort(int[] arr)
+    {
+        int[] tmp = new int[arr.length];
+        mSort(arr, tmp, 0, arr.length - 1);
+    }
+
+	
+	
+}
