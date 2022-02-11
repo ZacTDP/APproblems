@@ -1,0 +1,14 @@
+public class PriorityMail extends Mail
+{
+private double weight;
+private int zone;
+private double flat_price = 4.05;
+precondition: 1 <= zone <= 8
+public PriorityMail(double weight, double zone) [2 points] 
+  {
+  }
+public double calculatePostage() [4 points] 
+  {
+  }
+
+}
