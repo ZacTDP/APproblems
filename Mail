@@ -1,0 +1,17 @@
+public abstract class Mail extends Object implements Comparable 
+
+{
+public abstract double calculatePostage();
+public String toString()
+  {
+    DecimalFormat dollars = new DecimalFormat(“$0.00”);
+    Return dollars.format(calculatePostage()); 
+  }
+ public int compareTo(Object other) [4 points] 
+  {
+  }
+public boolean equals(Object other) [4 points] 
+  {
+  }
+
+}
